@@ -23,5 +23,5 @@ Example output:
          current-jobs-delayed              0
            current-jobs-ready              0
         current-jobs-reserved             31
-          current-waiting             69
+              current-waiting             69
 
