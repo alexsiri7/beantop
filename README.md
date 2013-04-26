@@ -10,7 +10,7 @@ Usage: ./beantop.py -h <host> -p <port>
 
 Inspired in very useful command tools like htop and innotop, I decided a good top command for beanstalkd could be very useful. Right now, it only shows a subset of the information available at a specified interval.
 
-To exit, use Ctr+C. 
+To exit, press 'q'
 
 Example output:
 
