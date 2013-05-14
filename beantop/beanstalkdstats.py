@@ -4,19 +4,19 @@ import telnetlib
 class BeanstalkdStats:
     GLOBAL_STATS_FIELDS = ["current-jobs-ready", "current-waiting", "current-workers"]
     TUBE_STATS_FIELDS = ["current-jobs-delayed", "current-jobs-ready", "current-jobs-reserved", "current-waiting"]
-    def __init__(self, b):
-        self.b=b
+    def __init__(self, beanstalkd):
+        self.beanstalkd=beanstalkd
     def _stats(self):
-        return self.format(self.b.yaml_data_filtered("stats", self.GLOBAL_STATS_FIELDS))
+        return self._format(self.beanstalkd.yaml_data_filtered("stats", self.GLOBAL_STATS_FIELDS))
         
     def _getTubes(self):
-        return self.b.yaml_data("list-tubes")
+        return self.beanstalkd.yaml_data("list-tubes")
         
     def _getFilteredTubes(self):
         tubes = self._getTubes()
         ts = dict()
         for t in tubes:
-            d = self.b.yaml_data_filtered("stats-tube "+t, self.TUBE_STATS_FIELDS)
+            d = self.beanstalkd.yaml_data_filtered("stats-tube "+t, self.TUBE_STATS_FIELDS)
             if (d["current-jobs-delayed"]+d["current-jobs-reserved"]+d["current-jobs-ready"]>0):
                 ts[t]=d
         return ts
@@ -29,7 +29,7 @@ class BeanstalkdStats:
         while len(rest)>0:
             ts = dict(rest.items()[:max_items])
             rest = dict(rest.items()[max_items:])
-            t_data += self.renderRow(ts)
+            t_data += self._renderRow(ts)
         return t_data
         
     def _renderRow(self,  ts):
@@ -47,8 +47,8 @@ class BeanstalkdStats:
         return t_data
 
     def renderScreen(self):
-      status = self.stats()
-      tubestatus = self.tubestats()
+      status = self._stats()
+      tubestatus = self._tubestats()
       return [status, tubestatus]
       
     def _format(self,dic):
