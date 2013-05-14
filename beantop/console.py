@@ -6,26 +6,29 @@ class Console:
     def setScreen(self, s):
         self.screen=s
         
-    def processCh(self):
-       c = self.sysio.getch()
-       p = False
-       while c is not None:
-         p = True
-         if c=='q': 
-           self.finished=True
-           return True
-         c = self.sysio.getch()
-       return p     
+    def processChar(self):
+        c = self.sysio.getch()
+        if c is None:
+            return False
+        if c=='q': 
+            self.finished=True
+        return True
+       
+    def processCharQueue(self):
+       foundChar = self.processChar()
+       while foundChar and not self.finished:
+            foundChar = self.processChar()
+       
 
     def runlooponce(self):
         nt = self.sysio.time()+5
         scr = self.screen.renderScreen()
         self.sysio.clear()
         time = self.sysio.getTime()
-        self.sysio.printlines([time]+scr)
+        self.sysio.printLines([time]+scr)
         p = False
-        while self.sysio.time()<nt and not p:
-           p = self.processCh()
+        while self.sysio.time()<nt and not self.finished:
+           self.processCharQueue()
            self.sysio.sleep(0.1)
            
     def mainloop(self):
