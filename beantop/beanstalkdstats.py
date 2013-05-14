@@ -5,9 +5,9 @@ class BeanstalkdStats:
     def __init__(self, b):
         self.b=b
     def stats(self):
-      return self.format(self.b.yaml_data("stats", ["current-jobs-ready", "current-waiting", "current-workers"]))
+      return self.format(self.b.yaml_data_filtered("stats", ["current-jobs-ready", "current-waiting", "current-workers"]))
     def tubestats(self):
-      tubes = self.b.yaml_data("list-tubes", None)
+      tubes = self.b.yaml_data("list-tubes")
       t_data = ""
       fields = ["current-jobs-delayed", "current-jobs-ready", 
         "current-jobs-reserved", "current-waiting"]
@@ -16,7 +16,7 @@ class BeanstalkdStats:
       field_width = 15
       max_items = 5
       for t in tubes:
-          d = self.b.yaml_data("stats-tube "+t, 
+          d = self.b.yaml_data_filtered("stats-tube "+t, 
             fields)
           if (d["current-jobs-delayed"]+d["current-jobs-reserved"]+d["current-jobs-ready"]>0):
             ts[t]=d

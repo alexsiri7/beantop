@@ -1,4 +1,4 @@
-import unittest, sys
+import unittest
 
 from beantop.beanstalkd import Beanstalkd
 
@@ -46,4 +46,4 @@ class Test(unittest.TestCase):
         self.assertEquals({'field_1':'a value', 'field_2':'other value'}, line)
 
 if __name__ == "__main__":
-    unittest.main()
+    unittest.main() 
