@@ -4,14 +4,15 @@ class SysIO:
     clear = lambda c: os.system('clear')
        
     def getch(self):
-      try:                 
+        self._setupTerminalForCharRead()
+        try:                 
           try:
             c = sys.stdin.read(1)
           except IOError: 
             c = None
-      finally:
-        self._setupTerminalForStandardUse()
-      return c
+        finally:
+            self._setupTerminalForStandardUse()
+        return c
       
     def time(self):
         return time.time()
@@ -27,15 +28,15 @@ class SysIO:
             print line
             
     def _setupTerminalForCharRead(self):
-      fd = sys.stdin.fileno()
-      self.oldterm = termios.tcgetattr(fd)
-      newattr = termios.tcgetattr(fd)
+      self.fd = sys.stdin.fileno()
+      self.oldterm = termios.tcgetattr(self.fd)
+      newattr = termios.tcgetattr(self.fd)
       newattr[3] = newattr[3] & ~termios.ICANON & ~termios.ECHO
-      termios.tcsetattr(fd, termios.TCSANOW, newattr)
-      self.oldflags = fcntl.fcntl(fd, fcntl.F_GETFL)
-      fcntl.fcntl(fd, fcntl.F_SETFL, oldflags | os.O_NONBLOCK)
+      termios.tcsetattr(self.fd, termios.TCSANOW, newattr)
+      self.oldflags = fcntl.fcntl(self.fd, fcntl.F_GETFL)
+      fcntl.fcntl(self.fd, fcntl.F_SETFL, self.oldflags | os.O_NONBLOCK)
     
     def _setupTerminalForStandardUse(self):
-        termios.tcsetattr(fd, termios.TCSAFLUSH, self.oldterm)
-        fcntl.fcntl(fd, fcntl.F_SETFL, self.oldflags)
+        termios.tcsetattr(self.fd, termios.TCSAFLUSH, self.oldterm)
+        fcntl.fcntl(self.fd, fcntl.F_SETFL, self.oldflags)
             
