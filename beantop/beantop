@@ -1,0 +1,27 @@
+#!/usr/bin/env python
+import sys, getopt
+from beanstalkd import Beanstalkd
+from beanstalkdstats import BeanstalkdStats
+from console import Console
+
+def main(argv):
+    try:
+        b = Beanstalkd()
+        stats = BeanstalkdStats(b)
+        console = Console()       
+        opts, args = getopt.getopt(argv,"h:p:",[])
+    except getopt.GetoptError:
+        print argv[0],' -h <host> -p <port>'
+        sys.exit(2)
+    for opt,arg in opts:
+        if opt=='-h':
+            b.host = arg
+        if opt=='-p':
+            b.port = arg
+    b.connect()
+    console.setScreen(stats)
+    console.mainloop()
+
+
+if __name__ == "__main__":
+   main(sys.argv[1:])
