@@ -37,8 +37,7 @@ class Test(unittest.TestCase):
     def setUp(self):
         self.screen = MockScreen()
         self.sysio = MockIO()
-        self.console = Console(self.sysio)
-        self.console.setScreen(self.screen)
+        self.console = Console(self.sysio, self.screen)
         
     def test_process_char_None(self):
         self.sysio.putchar("")
@@ -58,15 +57,17 @@ class Test(unittest.TestCase):
         self.assertEquals(True,  res)
         self.assertEquals(True,  self.console.finished)
     
-    def test_process_char_queue(self):
+    def test_process_char_queue_quit_and_write(self):
         self.sysio.putchar('asdfqasdf')
         self.console.processCharQueue()
         self.assertEquals(True,  self.console.finished)
+        self.assertEquals(4,  len(self.sysio.ch))
 
-    def test_process_char_queue(self):
+    def test_process_char_queue_noquit(self):
         self.sysio.putchar('asdfa')
         self.console.processCharQueue()
         self.assertEquals(False,  self.console.finished)
+        self.assertEquals(0,  len(self.sysio.ch))
 
     def test_mainloop(self):
         self.sysio.putchar(list("asdfa")+[None]*10+list("ffasq"))

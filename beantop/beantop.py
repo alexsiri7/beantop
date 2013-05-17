@@ -1,22 +1,13 @@
 #!/usr/bin/env python
-import sys, getopt
+
 from factory import Factory
+import sys
 
 def main(argv):
-    try:
-        b, stats,  console=Factory.startApplication()
-        opts, args = getopt.getopt(argv,"h:p:",[])
-    except getopt.GetoptError:
-        print argv[0],' -h <host> -p <port>'
-        sys.exit(2)
-    host = port = None
-    for opt,arg in opts:
-        if opt=='-h':
-            host = arg
-        if opt=='-p':
-            port = arg
-    b.connect(host, port)
-    console.setScreen(stats)
+    arguments = Factory.createArgumentsParser()
+    host, port = arguments.process(argv)
+    b,  console=Factory.startApplication(host, port)
+    b.connect()
     console.mainloop()
 
 

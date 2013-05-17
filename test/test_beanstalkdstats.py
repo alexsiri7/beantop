@@ -11,9 +11,9 @@ class MockBeanstalkd:
             return {"current-jobs-ready":1, "current-waiting":2, "current-workers":3}
         else:
             return {"current-jobs-delayed":1, 
-                        "current-jobs-reserved":2, 
-                        "current-jobs-ready":3, 
-                        "current-waiting":12}
+                    "current-jobs-reserved":2, 
+                    "current-jobs-ready":3, 
+                    "current-waiting":12}
 
 
 class Test(unittest.TestCase):
@@ -21,13 +21,17 @@ class Test(unittest.TestCase):
         self.beanstalkd=MockBeanstalkd()
         self.beanstalkdstats = BeanstalkdStats(self.beanstalkd)
         
-    def test_stats(self):
-        stats=self.beanstalkdstats._stats()
-        self.assertEquals("current-jobs-ready: 1\ncurrent-waiting: 2\ncurrent-workers: 3\n", stats)
-        
-    def test_tubestats(self):
-        stats=self.beanstalkdstats._tubestats()
-        self.assertEquals("Tube                     tube_1         tube_2         \n     current-jobs-delayed              1              1\n       current-jobs-ready              3              3\n    current-jobs-reserved              2              2\n          current-waiting             12             12\n", stats)
+    def test_renderScreen(self):
+        stats=self.beanstalkdstats.renderScreen()
+        self.assertEquals(
+            ['current-jobs-ready: 1',
+             'current-waiting: 2',
+             'current-workers: 3',
+             'Tube                     tube_1         tube_2         ',
+             '     current-jobs-delayed              1              1',
+             '       current-jobs-ready              3              3',
+             '    current-jobs-reserved              2              2',
+             '          current-waiting             12             12'], stats)
 
 if __name__ == "__main__":
     unittest.main() 

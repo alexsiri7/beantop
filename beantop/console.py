@@ -1,6 +1,7 @@
 class Console:
-    def __init__(self,  sysio):
+    def __init__(self,  sysio,  screen):
         self.sysio=sysio
+        self.screen=screen
         self.finished=False
         
     def setScreen(self, s):

@@ -2,17 +2,16 @@
 import yaml
 
 class Beanstalkd:
-    host = 'localhost'
-    port = 11300
+    host = None
+    port = None
     conn = None  
-    def __init__(self,  conn):
+    def __init__(self,  conn,  host,  port):
         self.conn = conn       
+        self.host=host
+        self.port=port
      
-    def connect(self,  host,  port):
-        if host is not None:
-            self.host = host
-        if port is not None:
-            self.port = port
+    def connect(self):
+        print "Connecting to", self.host, self.port
         self.conn.open(self.host, self.port)
     
     def send(self, mess):

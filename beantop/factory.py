@@ -1,20 +1,23 @@
 
 import telnetlib
 
+import sys, getopt
+
 from beanstalkd import Beanstalkd
 from beanstalkdstats import BeanstalkdStats
 from console import Console
 from sysio import SysIO
+from arguments import Arguments
 
 
 class Factory:
     @staticmethod
-    def createTelnetConnection():
-        return telnetlib.Telnet()
+    def createArgumentsParser():
+        return Arguments(sys, getopt)
     @staticmethod
-    def startApplication():
-        t = Factory.createTelnetConnection()
-        b = Beanstalkd(t)
+    def startApplication(host, port):
+        t = telnetlib.Telnet()
+        b = Beanstalkd(t, host, port)
         stats = BeanstalkdStats(b)
-        console = Console(SysIO())       
-        return b, stats, console
+        console = Console(SysIO(), stats)       
+        return b, console

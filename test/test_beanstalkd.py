@@ -17,18 +17,8 @@ class MockTelnet:
 class Test(unittest.TestCase):
     def setUp(self):
         self.telnet = MockTelnet()
-        self.beanstalkd = Beanstalkd(self.telnet)
-        
-    def test_connect_defaults(self):
-        self.beanstalkd.connect(None, None)
-        self.assertEquals("localhost", self.telnet.host)        
-        self.assertEquals(11300, self.telnet.port)        
-        
-    def test_connect_custom(self):
-        self.beanstalkd.connect("thehost", 9057)
-        self.assertEquals("thehost", self.telnet.host)
-        self.assertEquals(9057, self.telnet.port)        
-        
+        self.beanstalkd = Beanstalkd(self.telnet, 'thehost', 9057)
+                        
     def test_send(self):
         self.beanstalkd.send("amessage")
         self.assertEquals("amessage\r\n", self.telnet.lastMessage)
