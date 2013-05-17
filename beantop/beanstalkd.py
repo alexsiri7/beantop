@@ -11,7 +11,6 @@ class Beanstalkd:
         self.port=port
      
     def connect(self):
-        print "Connecting to", self.host, self.port
         self.conn.open(self.host, self.port)
     
     def send(self, mess):

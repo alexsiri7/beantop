@@ -3,6 +3,8 @@ import telnetlib
 
 import sys, getopt
 
+import os, time, sys, termios, fcntl
+
 from beanstalkd import Beanstalkd
 from beanstalkdstats import BeanstalkdStats
 from console import Console
@@ -19,5 +21,5 @@ class Factory:
         t = telnetlib.Telnet()
         b = Beanstalkd(t, host, port)
         stats = BeanstalkdStats(b)
-        console = Console(SysIO(), stats)       
+        console = Console(SysIO(os, time, sys, termios, fcntl), stats)       
         return b, console

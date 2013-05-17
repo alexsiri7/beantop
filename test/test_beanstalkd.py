@@ -3,11 +3,15 @@ import unittest
 from beantop.beanstalkd import Beanstalkd
 
 class MockTelnet:
+    def __init__(self):
+        self.openCalled=False
+        
     def open(self, host, port):
-        self.host = host
-        self.port = port        
+        self.openCalled=True
+        
     def write(self,  message):
         self.lastMessage=message
+        
     def read_until(self,  chars):
         return    ("data:\n"
                      "field_1: a value\n"
@@ -22,7 +26,12 @@ class Test(unittest.TestCase):
     def test_send(self):
         self.beanstalkd.send("amessage")
         self.assertEquals("amessage\r\n", self.telnet.lastMessage)
-        
+
+    def test_connect(self):
+        self.beanstalkd.connect()
+        self.assertTrue(self.telnet.openCalled)        
+
+
     def test_readline(self):
         line = self.beanstalkd.readline()
         self.assertEquals("data:\nfield_1: a value\nfield_2: other value\n", line)

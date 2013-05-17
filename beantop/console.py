@@ -4,9 +4,6 @@ class Console:
         self.screen=screen
         self.finished=False
         
-    def setScreen(self, s):
-        self.screen=s
-        
     def processChar(self):
         c = self.sysio.getch()
         if c is None:

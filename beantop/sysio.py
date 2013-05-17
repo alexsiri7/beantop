@@ -1,42 +1,48 @@
-import os, time, sys, termios, fcntl
 
 class SysIO:
     clear = lambda c: os.system('clear')
        
+    def __init__(self,  os, time, sys, termios, fcntl):
+        self.os=os
+        self.time=time
+        self.sys=sys
+        self.termios=termios
+        self.fcntl=fcntl
+    
     def getch(self):
         self._setupTerminalForCharRead()
         try:                 
           try:
-            c = sys.stdin.read(1)
+            c = self.sys.stdin.read(1)
           except IOError: 
             c = None
         finally:
             self._setupTerminalForStandardUse()
         return c
       
-    def time(self):
-        return time.time()
+    def gmtime(self):
+        return self.time.gmtime()
         
     def sleep(self, secs):
-        return time.sleep(secs)
+        return self.time.sleep(secs)
         
     def getTime(self):
-        return time.strftime("%a, %d %b %Y %X", time.gmtime())
+        return self.time.strftime("%a, %d %b %Y %X", self.gmtime())
         
     def printLines(self, lines):
         for line in lines:
-            print line
+            self.sys.stdout.write(line+'\n')
             
     def _setupTerminalForCharRead(self):
-      self.fd = sys.stdin.fileno()
-      self.oldterm = termios.tcgetattr(self.fd)
-      newattr = termios.tcgetattr(self.fd)
-      newattr[3] = newattr[3] & ~termios.ICANON & ~termios.ECHO
-      termios.tcsetattr(self.fd, termios.TCSANOW, newattr)
-      self.oldflags = fcntl.fcntl(self.fd, fcntl.F_GETFL)
-      fcntl.fcntl(self.fd, fcntl.F_SETFL, self.oldflags | os.O_NONBLOCK)
+      self.fd = self.sys.stdin.fileno()
+      self.oldterm = self.termios.tcgetattr(self.fd)
+      newattr = self.termios.tcgetattr(self.fd)
+      newattr[3] = newattr[3] & ~self.termios.ICANON & ~self.termios.ECHO
+      self.termios.tcsetattr(self.fd, self.termios.TCSANOW, newattr)
+      self.oldflags = self.fcntl.fcntl(self.fd, self.fcntl.F_GETFL)
+      self.fcntl.fcntl(self.fd, self.fcntl.F_SETFL, self.oldflags | self.os.O_NONBLOCK)
     
     def _setupTerminalForStandardUse(self):
-        termios.tcsetattr(self.fd, termios.TCSAFLUSH, self.oldterm)
-        fcntl.fcntl(self.fd, fcntl.F_SETFL, self.oldflags)
+        self.termios.tcsetattr(self.fd, self.termios.TCSAFLUSH, self.oldterm)
+        self.fcntl.fcntl(self.fd, self.fcntl.F_SETFL, self.oldflags)
             
