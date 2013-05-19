@@ -34,3 +34,10 @@ nosetests.xml
 .project
 .pydevproject
 README.md~
+beantop/test/cover
+*~
+.gitignore
+.eric4project/
+.ropeproject/
+beantop/beantop.coverage
+beantop/test/.coveragerc
