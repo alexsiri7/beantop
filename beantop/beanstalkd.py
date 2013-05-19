@@ -7,8 +7,8 @@ class Beanstalkd:
     conn = None  
     def __init__(self,  conn,  host,  port):
         self.conn = conn       
-        self.host=host
-        self.port=port
+        self.host = host
+        self.port = port
      
     def connect(self):
         self.conn.open(self.host, self.port)
@@ -19,11 +19,11 @@ class Beanstalkd:
     def readline(self):
         return self.conn.read_until("\n")    
       
-    def yaml_data_filtered(self, msg, fields):
+    def yaml_data_filtered(self, msg, fields_to_show):
         stats =  self.yaml_data(msg)
-        ret_data=dict()
-        for d in fields:
-            ret_data[d]=stats[d]
+        ret_data = dict()
+        for field in fields_to_show:
+            ret_data[field] = stats[field]
         return ret_data
         
     def yaml_data(self, msg):

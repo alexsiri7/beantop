@@ -22,7 +22,7 @@ class Test(unittest.TestCase):
         self.beanstalkdstats = BeanstalkdStats(self.beanstalkd)
         
     def test_renderScreen(self):
-        stats=self.beanstalkdstats.renderScreen()
+        stats=self.beanstalkdstats.render_screen()
         self.assertEquals(
             ['current-jobs-ready: 1',
              'current-waiting: 2',

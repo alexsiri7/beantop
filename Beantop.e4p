@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE Project SYSTEM "Project-4.6.dtd">
 <!-- eric4 project file for project Beantop -->
-<!-- Saved: 2013-05-17, 09:40:31 -->
+<!-- Saved: 2013-05-19, 09:35:24 -->
 <!-- Copyright (C) 2013 ,  -->
 <Project version="4.6">
   <Language>en</Language>
@@ -21,12 +21,14 @@
     <Source>beantop/beanstalkdstats.py</Source>
     <Source>beantop/console.py</Source>
     <Source>beantop/factory.py</Source>
-    <Source>test/test_beanstalkdstats.py</Source>
-    <Source>test/test_sysio.py</Source>
-    <Source>test/unittest_main.py</Source>
-    <Source>test/test_beanstalkd.py</Source>
-    <Source>test/test_console.py</Source>
-    <Source>test/test_arguments.py</Source>
+    <Source>beantop/test/test_arguments.py</Source>
+    <Source>beantop/test/test_beanstalkd.py</Source>
+    <Source>beantop/test/test_beanstalkdstats.py</Source>
+    <Source>beantop/test/test_charreader.py</Source>
+    <Source>beantop/test/test_console.py</Source>
+    <Source>beantop/test/test_factory.py</Source>
+    <Source>beantop/test/test_screenprinter.py</Source>
+    <Source>beantop/test/test_time.py</Source>
   </Sources>
   <Forms>
   </Forms>
@@ -48,4 +50,125 @@
     <FiletypeAssociation pattern="*.py" type="SOURCES" />
     <FiletypeAssociation pattern="*.ptl" type="SOURCES" />
   </FiletypeAssociations>
+  <Checkers>
+    <CheckersParams>
+      <dict>
+        <key>
+          <string>PYLINT</string>
+        </key>
+        <value>
+          <dict>
+            <key>
+              <string>dialogReport</string>
+            </key>
+            <value>
+              <bool>True</bool>
+            </value>
+            <key>
+              <string>disabledMessages</string>
+            </key>
+            <value>
+              <unicode>C0111,C0112,W0403</unicode>
+            </value>
+            <key>
+              <string>enableBasic</string>
+            </key>
+            <value>
+              <bool>True</bool>
+            </value>
+            <key>
+              <string>enableClasses</string>
+            </key>
+            <value>
+              <bool>True</bool>
+            </value>
+            <key>
+              <string>enableDesign</string>
+            </key>
+            <value>
+              <bool>True</bool>
+            </value>
+            <key>
+              <string>enableExceptions</string>
+            </key>
+            <value>
+              <bool>True</bool>
+            </value>
+            <key>
+              <string>enableFormat</string>
+            </key>
+            <value>
+              <bool>True</bool>
+            </value>
+            <key>
+              <string>enableImports</string>
+            </key>
+            <value>
+              <bool>True</bool>
+            </value>
+            <key>
+              <string>enableMetrics</string>
+            </key>
+            <value>
+              <bool>True</bool>
+            </value>
+            <key>
+              <string>enableMiscellaneous</string>
+            </key>
+            <value>
+              <bool>True</bool>
+            </value>
+            <key>
+              <string>enableNewstyle</string>
+            </key>
+            <value>
+              <bool>True</bool>
+            </value>
+            <key>
+              <string>enableRPython</string>
+            </key>
+            <value>
+              <bool>True</bool>
+            </value>
+            <key>
+              <string>enableSimilarities</string>
+            </key>
+            <value>
+              <bool>True</bool>
+            </value>
+            <key>
+              <string>enableTypecheck</string>
+            </key>
+            <value>
+              <bool>True</bool>
+            </value>
+            <key>
+              <string>enableVariables</string>
+            </key>
+            <value>
+              <bool>True</bool>
+            </value>
+            <key>
+              <string>enabledMessages</string>
+            </key>
+            <value>
+              <unicode></unicode>
+            </value>
+            <key>
+              <string>htmlReport</string>
+            </key>
+            <value>
+              <bool>False</bool>
+            </value>
+            <key>
+              <string>txtReport</string>
+            </key>
+            <value>
+              <bool>False</bool>
+            </value>
+          </dict>
+        </value>
+      </dict>
+    </CheckersParams>
+  </Checkers>
 </Project>

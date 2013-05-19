@@ -1,62 +1,73 @@
 
-import telnetlib
-
 HEADER_WIDTH = 25
 FIELD_WIDTH = 15
-GLOBAL_STATS_FIELDS = ["current-jobs-ready", "current-waiting", "current-workers"]
-TUBE_STATS_FIELDS = ["current-jobs-delayed", "current-jobs-ready", "current-jobs-reserved", "current-waiting"]
+GLOBAL_STATS_FIELDS = ["current-jobs-ready", 
+                                "current-waiting", 
+                                "current-workers"]
+TUBE_STATS_FIELDS = ["current-jobs-delayed", 
+                            "current-jobs-ready", 
+                            "current-jobs-reserved", 
+                            "current-waiting"]
 
 
 class BeanstalkdStats:
     def __init__(self, beanstalkd):
-        self.beanstalkd=beanstalkd
-    def _stats(self):
+        self.beanstalkd = beanstalkd
+
+    def render_screen(self):
+        status = self._fetch_global_stats()
+        tubestats = self._fetch_tube_stats()
+        return status+tubestats
+        
+    def _fetch_global_stats(self):
         return self._format(
             self.beanstalkd.yaml_data_filtered("stats", GLOBAL_STATS_FIELDS))
         
-    def _getTubes(self):
-        return self.beanstalkd.yaml_data("list-tubes")
-        
-    def _getFilteredTubes(self):
-        tubes = self._getTubes()
-        ts = dict()
-        for t in tubes:
-            d = self.beanstalkd.yaml_data_filtered("stats-tube "+t, TUBE_STATS_FIELDS)
-            if (d["current-jobs-delayed"]+d["current-jobs-reserved"]+d["current-jobs-ready"]>0):
-                ts[t]=d
-        return ts
-        
-    def _tubestats(self):
-        ts = self._getFilteredTubes()
+    def _format(self, dic):
+        ret_data = []
+        for field, value in dic.iteritems():
+            ret_data.append(field+": "+str(value))
+        return ret_data        
+                
+    def _fetch_tube_stats(self):
+        all_tubes = self._get_filtered_tubes()
         t_data = []
         max_items = 5
-        rest = ts
-        while len(rest)>0:
-            ts = dict(rest.items()[:max_items])
-            rest = dict(rest.items()[max_items:])
-            t_data += self._renderRow(ts)
+        remaining_tubes = all_tubes
+        while len(remaining_tubes)>0:
+            tubes_in_row = dict(remaining_tubes.items()[:max_items])
+            remaining_tubes = dict(remaining_tubes.items()[max_items:])
+            t_data += self._render_row(tubes_in_row)
         return t_data
         
-    def _renderRow(self,  ts):
-        t_data=[]
+    def _get_filtered_tubes(self):
+        all_tubes = self._get_tubes()
+        filtered_tubes = dict()
+        for tube_name in all_tubes:
+            tube = self.beanstalkd.yaml_data_filtered("stats-tube "+tube_name, 
+                                                   TUBE_STATS_FIELDS)
+            if (self._tube_has_meaningful_info(tube)):
+                filtered_tubes[tube_name] = tube
+        return filtered_tubes
+
+    def _get_tubes(self):
+        return self.beanstalkd.yaml_data("list-tubes")
+
+    def _tube_has_meaningful_info(self, tube):
+        return (tube["current-jobs-delayed"]+
+                    tube["current-jobs-reserved"]+
+                    tube["current-jobs-ready"])>0
+
+    def _render_row(self,  tubes_in_row):
+        t_data = []
         t_headers = "Tube".ljust(HEADER_WIDTH)
-        for t,d in ts.iteritems(): 
-            t_headers += t.ljust(FIELD_WIDTH)
+        for tube_name, tube_data in tubes_in_row.iteritems(): 
+            t_headers += tube_name.ljust(FIELD_WIDTH)
         t_data.append(t_headers)
-        for f in TUBE_STATS_FIELDS: 
-            t_row = f.rjust(HEADER_WIDTH)
-            for t,d in ts.iteritems(): 
-                t_row += str(d[f]).rjust(FIELD_WIDTH)
+        for field in TUBE_STATS_FIELDS: 
+            t_row = field.rjust(HEADER_WIDTH)
+            for tube_name, tube_data in tubes_in_row.iteritems(): 
+                t_row += str(tube_data[field]).rjust(FIELD_WIDTH)
             t_data.append(t_row)
         return t_data
 
-    def renderScreen(self):
-      status = self._stats()
-      tubestats = self._tubestats()
-      return status+tubestats
-      
-    def _format(self,dic):
-      ret_data=[]
-      for k,v in dic.iteritems():
-        ret_data.append(k+": "+str(v))
-      return ret_data

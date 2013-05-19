@@ -1,15 +1,15 @@
 #!/usr/bin/env python
 
-from factory import Factory
+import factory 
 import sys
 
 def main(argv):
-    arguments = Factory.createArgumentsParser()
+    arguments = factory.create_arguments_parser()
     host, port = arguments.process(argv)
-    b,  console=Factory.startApplication(host, port)
-    b.connect()
-    console.mainloop()
+    beanstalkd,  console = factory.start_application(host, port)
+    beanstalkd.connect()
+    console.main_loop()
 
 
 if __name__ == "__main__":
-   main(sys.argv[1:])
+    main(sys.argv[1:])
