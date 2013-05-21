@@ -21,10 +21,10 @@ class Console:
         self._screen_printer.clear()
         time = self._time.get_printable_time()
         self._screen_printer.print_lines([time]+scr)
-        while self._time.gmtime()<time_limit and not self._finished:
+        self._loop_finished=False
+        while self._time.gmtime()<time_limit and not self._loop_finished:
             self._process_char_queue()
             self._time.sleep(0.1)
-               
 
     def _process_char(self):
         char_read = self._char_reader.get_char()
@@ -32,6 +32,9 @@ class Console:
             return False
         if char_read == 'q': 
             self._finished = True
+            self._loop_finished=True
+        if char_read == 'r': 
+            self._loop_finished=True
         return True
        
     def _process_char_queue(self):

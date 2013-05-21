@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE Project SYSTEM "Project-4.6.dtd">
 <!-- eric4 project file for project Beantop -->
-<!-- Saved: 2013-05-19, 10:55:42 -->
+<!-- Saved: 2013-05-21, 09:56:32 -->
 <!-- Copyright (C) 2013 ,  -->
 <Project version="4.6">
   <Language>en</Language>
@@ -14,7 +14,6 @@
   <Sources>
     <Source>beantop/beantop.py</Source>
     <Source>__init__.py</Source>
-    <Source>beantop/sysio.py</Source>
     <Source>beantop/__init__.py</Source>
     <Source>beantop/arguments.py</Source>
     <Source>beantop/beanstalkd.py</Source>
@@ -28,9 +27,13 @@
     <Source>beantop/test/test_console.py</Source>
     <Source>beantop/test/test_factory.py</Source>
     <Source>beantop/test/test_screenprinter.py</Source>
-    <Source>beantop/test/test_time.py</Source>
     <Source>beantop/test/test_integration.py</Source>
     <Source>beantop/test/mocks.py</Source>
+    <Source>beantop/screenprinter.py</Source>
+    <Source>beantop/charreader.py</Source>
+    <Source>beantop/__main__.py</Source>
+    <Source>beantop/clock.py</Source>
+    <Source>beantop/test/test_clock.py</Source>
   </Sources>
   <Forms>
   </Forms>
@@ -61,6 +64,12 @@
         <value>
           <dict>
             <key>
+              <string>configFile</string>
+            </key>
+            <value>
+              <unicode>/home/alex/Projects/beantop/beantop/test/pylint.config</unicode>
+            </value>
+            <key>
               <string>dialogReport</string>
             </key>
             <value>
@@ -70,7 +79,7 @@
               <string>disabledMessages</string>
             </key>
             <value>
-              <unicode>C0111,C0112,W0403</unicode>
+              <unicode>C0111,C0112,W0403,R0903</unicode>
             </value>
             <key>
               <string>enableBasic</string>

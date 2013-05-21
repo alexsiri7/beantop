@@ -12,7 +12,7 @@ class Test(unittest.TestCase):
         self.console = Console(self.time, self.char_reader,  self.screen_printer, self.screen)
         
     def test_mainloop(self):
-        self.char_reader.put_char(list("asdfa")+[None]*10+list("ffasq"))
+        self.char_reader.put_char(list("asdfr")+[None]*10+list("ffasq"))
         self.console.main_loop()
         self.assertEquals(11,  self.time.totalsleep)
         self.assertEquals(3,  self.screen.printcalls)
