@@ -9,11 +9,12 @@ class Arguments:
         
     def process(self, argv):
         try:
-            opts, _ = self._getopt.getopt(argv, "h:p:", [])
+            return self._process_arguments(argv)
         except self._getopt.GetoptError:
-            self._system.stdout.write(argv[0]+' -h <host> -p <port>')
-            self._system.exit(2)
-            return None, None
+            self._exception_when_processing(argv)
+            
+    def _process_arguments(self, argv):
+        opts, _ = self._getopt.getopt(argv, "h:p:", [])
         host = DEFAULT_HOST
         port = DEFAULT_PORT
         for opt, arg in opts:
@@ -21,5 +22,9 @@ class Arguments:
                 host = arg
             if opt == '-p':
                 port = arg
-        return host, port
+        return host, port            
+    
+    def _exception_when_processing(self, argv):
+        self._system.stdout.write(argv[0]+' -h <host> -p <port>')
+        self._system.exit(2)
 

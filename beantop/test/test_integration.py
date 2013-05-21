@@ -4,7 +4,7 @@ from mocks import *
 from beantop.beanstalkdstats import BeanstalkdStats
 from beantop.beanstalkd import Beanstalkd
 from beantop.console import Console
-from beantop.time import Time
+from beantop.clock import Clock
 from beantop.charreader import CharReader
 from beantop.screenprinter import ScreenPrinter
 from beantop.arguments import Arguments
@@ -24,7 +24,7 @@ class Test(unittest.TestCase):
         self.stats = BeanstalkdStats(self.beanstalkd)
         self.char_reader = CharReader(self.mock_os, self.mock_sys, self.mock_termios, self.mock_fcntl)
         self.screen_printer = ScreenPrinter(self.mock_os, self.mock_sys)
-        self.console = Console(Time(self.mock_time),  self.char_reader,  self.screen_printer, self.stats)       
+        self.console = Console(Clock(self.mock_time),  self.char_reader,  self.screen_printer, self.stats)       
 
     def test_integration(self):
         self.beanstalkd.connect()

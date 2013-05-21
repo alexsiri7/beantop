@@ -1,12 +1,12 @@
 import unittest
 
 from mocks import *
-from beantop.time import Time
+from beantop.clock import Clock
     
 class Test(unittest.TestCase):
     def setUp(self):
         self.mock_time = MockTime()
-        self.time = Time(self.mock_time)
+        self.time = Clock(self.mock_time)
 
     def test_get_printable_time(self):
         t = self.time.get_printable_time()

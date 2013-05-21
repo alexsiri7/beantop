@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-import factory 
+from . import factory 
 import sys
 
 def main(argv):
