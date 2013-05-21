@@ -1,7 +1,7 @@
 import unittest
 
 from mocks import *
-from beantop.sysio import CharReader
+from beantop.charreader import CharReader
     
 class Test(unittest.TestCase):
     def setUp(self):

@@ -4,7 +4,9 @@ from mocks import *
 from beantop.beanstalkdstats import BeanstalkdStats
 from beantop.beanstalkd import Beanstalkd
 from beantop.console import Console
-from beantop.sysio import Time,  CharReader,  ScreenPrinter
+from beantop.time import Time
+from beantop.charreader import CharReader
+from beantop.screenprinter import ScreenPrinter
 from beantop.arguments import Arguments
 
 class Test(unittest.TestCase):

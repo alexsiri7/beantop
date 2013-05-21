@@ -1,40 +1,40 @@
 class Console:
     def __init__(self,  time,  char_reader,  screen_printer,  screen):
-        self.time = time
-        self.char_reader = char_reader
-        self.screen_printer = screen_printer
-        self.screen = screen
-        self.finished = False
+        self._time = time
+        self._char_reader = char_reader
+        self._screen_printer = screen_printer
+        self._screen = screen
+        self._finished = False
 
     def main_loop(self):
         try:
-            self.char_reader.setup_terminal_for_char_read()
-            while not self.finished:
+            self._char_reader.setup_terminal_for_char_read()
+            while not self._finished:
                 self._run_loop_once()
         finally:
-            self.char_reader.reset_terminal_options()
+            self._char_reader.reset_terminal_options()
 
 
     def _run_loop_once(self):
-        time_limit = self.time.gmtime()+5
-        scr = self.screen.render_screen()
-        self.screen_printer.clear()
-        time = self.time.get_printable_time()
-        self.screen_printer.print_lines([time]+scr)
-        while self.time.gmtime()<time_limit and not self.finished:
+        time_limit = self._time.gmtime()+5
+        scr = self._screen.render_screen()
+        self._screen_printer.clear()
+        time = self._time.get_printable_time()
+        self._screen_printer.print_lines([time]+scr)
+        while self._time.gmtime()<time_limit and not self._finished:
             self._process_char_queue()
-            self.time.sleep(0.1)
+            self._time.sleep(0.1)
                
 
     def _process_char(self):
-        char_read = self.char_reader.get_char()
+        char_read = self._char_reader.get_char()
         if char_read is None:
             return False
         if char_read == 'q': 
-            self.finished = True
+            self._finished = True
         return True
        
     def _process_char_queue(self):
         found_char = self._process_char()
-        while found_char and not self.finished:
+        while found_char and not self._finished:
             found_char = self._process_char()

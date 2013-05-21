@@ -12,18 +12,19 @@ TUBE_STATS_FIELDS = ["current-jobs-delayed",
 
 class BeanstalkdStats:
     def __init__(self, beanstalkd):
-        self.beanstalkd = beanstalkd
+        self._beanstalkd = beanstalkd
 
     def render_screen(self):
         status = self._fetch_global_stats()
-        tubestats = self._fetch_tube_stats()
-        return status+tubestats
+        tube_stats = self._fetch_tube_stats()
+        return status+tube_stats
         
     def _fetch_global_stats(self):
         return self._format(
-            self.beanstalkd.yaml_data_filtered("stats", GLOBAL_STATS_FIELDS))
-        
-    def _format(self, dic):
+            self._beanstalkd.yaml_data_filtered("stats", GLOBAL_STATS_FIELDS))
+    
+    @staticmethod
+    def _format(dic):
         ret_data = []
         for field, value in dic.iteritems():
             ret_data.append(field+": "+str(value))
@@ -44,21 +45,23 @@ class BeanstalkdStats:
         all_tubes = self._get_tubes()
         filtered_tubes = dict()
         for tube_name in all_tubes:
-            tube = self.beanstalkd.yaml_data_filtered("stats-tube "+tube_name, 
+            tube = self._beanstalkd.yaml_data_filtered("stats-tube "+tube_name, 
                                                    TUBE_STATS_FIELDS)
             if (self._tube_has_meaningful_info(tube)):
                 filtered_tubes[tube_name] = tube
         return filtered_tubes
 
     def _get_tubes(self):
-        return self.beanstalkd.yaml_data("list-tubes")
+        return self._beanstalkd.yaml_data("list-tubes")
 
-    def _tube_has_meaningful_info(self, tube):
+    @staticmethod
+    def _tube_has_meaningful_info(tube):
         return (tube["current-jobs-delayed"]+
                     tube["current-jobs-reserved"]+
                     tube["current-jobs-ready"])>0
 
-    def _render_row(self,  tubes_in_row):
+    @staticmethod
+    def _render_row(tubes_in_row):
         t_data = []
         t_headers = "Tube".ljust(HEADER_WIDTH)
         for tube_name, tube_data in tubes_in_row.iteritems(): 

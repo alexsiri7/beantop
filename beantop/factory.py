@@ -8,7 +8,9 @@ import os, time, termios, fcntl
 from beanstalkdstats import BeanstalkdStats
 from beanstalkd import Beanstalkd
 from console import Console
-from sysio import Time,  CharReader,  ScreenPrinter
+from time import Time
+from charreader import CharReader
+from screenprinter import ScreenPrinter
 from arguments import Arguments
 
 

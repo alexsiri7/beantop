@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE Project SYSTEM "Project-4.6.dtd">
 <!-- eric4 project file for project Beantop -->
-<!-- Saved: 2013-05-19, 09:35:24 -->
+<!-- Saved: 2013-05-19, 10:55:42 -->
 <!-- Copyright (C) 2013 ,  -->
 <Project version="4.6">
   <Language>en</Language>
@@ -29,6 +29,8 @@
     <Source>beantop/test/test_factory.py</Source>
     <Source>beantop/test/test_screenprinter.py</Source>
     <Source>beantop/test/test_time.py</Source>
+    <Source>beantop/test/test_integration.py</Source>
+    <Source>beantop/test/mocks.py</Source>
   </Sources>
   <Forms>
   </Forms>

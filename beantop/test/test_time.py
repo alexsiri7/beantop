@@ -1,7 +1,7 @@
 import unittest
 
 from mocks import *
-from beantop.sysio import Time
+from beantop.time import Time
     
 class Test(unittest.TestCase):
     def setUp(self):

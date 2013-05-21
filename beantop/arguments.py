@@ -4,15 +4,15 @@ DEFAULT_PORT = 11300
 
 class Arguments:
     def __init__(self, system, getopt):
-        self.system = system
-        self.getopt = getopt
+        self._system = system
+        self._getopt = getopt
         
     def process(self, argv):
         try:
-            opts, _ = self.getopt.getopt(argv, "h:p:", [])
-        except self.getopt.GetoptError:
-            self.system.stdout.write(argv[0]+' -h <host> -p <port>')
-            self.system.exit(2)
+            opts, _ = self._getopt.getopt(argv, "h:p:", [])
+        except self._getopt.GetoptError:
+            self._system.stdout.write(argv[0]+' -h <host> -p <port>')
+            self._system.exit(2)
             return None, None
         host = DEFAULT_HOST
         port = DEFAULT_PORT

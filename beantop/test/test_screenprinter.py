@@ -1,6 +1,6 @@
 import unittest
 
-from beantop.sysio import ScreenPrinter
+from beantop.screenprinter import ScreenPrinter
 
 class MockOs:
     O_NONBLOCK=True
