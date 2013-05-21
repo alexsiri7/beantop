@@ -1,90 +1,77 @@
 import unittest
 
 from beantop.arguments import *
-
-class MockFile:
-    
-    def __init__(self):
-        self.written=[]
-        
-    def write(self, str):
-        self.written.append(str)
-        
-class MockSys:
-    def __init__(self):
-        self.exitCalled=False
-        self.stdout = MockFile()
-        
-    def exit(self, code):
-        self.exitCalled=True
-
-class MockGetOpt:
-    GetoptError=Exception
-    def __init__(self):
-        self.returnParams=None
-        
-    def getopt(self, argv, options, longoptions):
-        if self.returnParams is None:
-            raise self.GetoptError()
-        else:
-            return (self.returnParams, [])
+from mock import *
 
 CUSTOM_PORT = 1234
 CUSTOM_HOST='thehost'
 
+class MockError(Exception):
+    pass
+
 class Test(unittest.TestCase):
     def setUp(self):
-        self.sys=MockSys()
-        self.getopt=MockGetOpt()
+        self.sys=Mock(stdout=MagicMock())
+        self.opts=MagicMock()
+        self.getopt=Mock(getopt=self.opts, GetoptError=MockError)
         self.arguments = Arguments(self.sys, self.getopt)
         
     def test_parseNoArguments(self):
-        self.getopt.returnParams=[]
+        self.opts.return_value=[], None
 
-        host, port = self.arguments.process(['test'])
+        connection_params = self.arguments.process(['test'])
         
-        self.assertEquals([],  self.sys.stdout.written)
-        self.assertEquals(DEFAULT_HOST, host)
-        self.assertEquals(DEFAULT_PORT, port)
-        self.assertFalse(self.sys.exitCalled)
+        self.assertOutput([])
+        self.assertEquals((DEFAULT_HOST, DEFAULT_PORT),  connection_params)        
+        self.assertNotAppClosed()
 
     def test_parseIncompleteArguments(self):
-        self.getopt.returnParams=None  
+        self.opts.side_effect=MockError
         
-        host, port = self.arguments.process(['test'])
+        connection_params = self.arguments.process(['test'])
         
-        self.assertEquals(['test -h <host> -p <port>'],  self.sys.stdout.written)
-        self.assertTrue(self.sys.exitCalled)
+        self.assertOutput(['test -h <host> -p <port>'])
+        self.assertAppClosed()
         
     def test_parseOnlyPort(self):
-        self.getopt.returnParams=[('-p', CUSTOM_PORT)]
+        self.opts.return_value=[('-p', CUSTOM_PORT)], None
         
-        host, port = self.arguments.process(['test'])
+        connection_params = self.arguments.process(['test'])
         
-        self.assertEquals([],  self.sys.stdout.written)
-        self.assertEquals(DEFAULT_HOST, host)
-        self.assertEquals(CUSTOM_PORT, port)
-        self.assertFalse(self.sys.exitCalled)
+        self.assertOutput([])
+        self.assertEquals((DEFAULT_HOST, CUSTOM_PORT),  connection_params)        
+        self.assertNotAppClosed()
     
     def test_parseOnlyHost(self):
-        self.getopt.returnParams=[('-h', CUSTOM_HOST)]
+        self.opts.return_value=[('-h', CUSTOM_HOST)], None
         
-        host, port = self.arguments.process(['test'])
+        connection_params = self.arguments.process(['test'])
         
-        self.assertEquals([],  self.sys.stdout.written)
-        self.assertEquals(CUSTOM_HOST, host)
-        self.assertEquals(DEFAULT_PORT, port)
-        self.assertFalse(self.sys.exitCalled)
+        self.assertOutput([])
+        self.assertEquals((CUSTOM_HOST, DEFAULT_PORT),  connection_params)
+        self.assertNotAppClosed()
     
     def test_parseAllArguments(self):
-        self.getopt.returnParams=[('-h', CUSTOM_HOST),('-p', CUSTOM_PORT)]
+        self.opts.return_value=[('-h', CUSTOM_HOST),('-p', CUSTOM_PORT)], None
         
-        host, port = self.arguments.process(['test'])
+        connection_params = self.arguments.process(['test'])
         
-        self.assertEquals([],  self.sys.stdout.written)
-        self.assertEquals(CUSTOM_HOST, host)
-        self.assertEquals(CUSTOM_PORT, port)
-        self.assertFalse(self.sys.exitCalled)
+        self.assertOutput([])
+        self.assertEquals((CUSTOM_HOST, CUSTOM_PORT),  connection_params)
+        self.assertNotAppClosed()
+        
+    def assertAppClosed(self):
+        self.assertAppClosedIs(True)
+    
+    def assertNotAppClosed(self):
+        self.assertAppClosedIs(False)
+    
+    def assertAppClosedIs(self, state):
+        self.sys.exit.assert_was_called(state)
+        
+    def assertOutput(self, lines):
+        calls = map(call,  lines)
+        self.sys.stdout.write.assert_has_calls(calls)
 
 if __name__ == "__main__":
     unittest.main() 
