@@ -14,7 +14,6 @@ class Console:
         finally:
             self._char_reader.reset_terminal_options()
 
-
     def _run_loop_once(self):
         time_limit = self._time.gmtime()+5
         scr = self._screen.render_screen()

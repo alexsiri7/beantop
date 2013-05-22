@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE Project SYSTEM "Project-4.6.dtd">
 <!-- eric4 project file for project Beantop -->
-<!-- Saved: 2013-05-21, 09:56:32 -->
+<!-- Saved: 2013-05-21, 14:12:57 -->
 <!-- Copyright (C) 2013 ,  -->
 <Project version="4.6">
   <Language>en</Language>
@@ -12,7 +12,6 @@
   <Author></Author>
   <Email></Email>
   <Sources>
-    <Source>beantop/beantop.py</Source>
     <Source>__init__.py</Source>
     <Source>beantop/__init__.py</Source>
     <Source>beantop/arguments.py</Source>
