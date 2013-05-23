@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE Project SYSTEM "Project-4.6.dtd">
 <!-- eric4 project file for project Beantop -->
-<!-- Saved: 2013-05-21, 14:12:57 -->
+<!-- Saved: 2013-05-22, 09:32:59 -->
 <!-- Copyright (C) 2013 ,  -->
 <Project version="4.6">
   <Language>en</Language>
@@ -33,6 +33,7 @@
     <Source>beantop/__main__.py</Source>
     <Source>beantop/clock.py</Source>
     <Source>beantop/test/test_clock.py</Source>
+    <Source>setup.py</Source>
   </Sources>
   <Forms>
   </Forms>

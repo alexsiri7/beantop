@@ -19,6 +19,7 @@ class MockTelnet:
             return    ("current-jobs-delayed: 4\n"
                          "current-jobs-ready: 10\n"
                          "current-waiting: 6\n"
+                         "current-watching: 12\n"
                          "current-jobs-reserved: 3\n")
         else:
             raise Exception("Unknown message: "+repr(self.lastMessage))

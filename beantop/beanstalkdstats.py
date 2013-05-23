@@ -7,7 +7,8 @@ GLOBAL_STATS_FIELDS = ["current-jobs-ready",
 TUBE_STATS_FIELDS = ["current-jobs-delayed", 
                             "current-jobs-ready", 
                             "current-jobs-reserved", 
-                            "current-waiting"]
+                            "current-waiting", 
+                            "current-watching"]
 
 
 class BeanstalkdStats:

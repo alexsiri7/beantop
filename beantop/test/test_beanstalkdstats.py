@@ -13,7 +13,8 @@ class MockBeanstalkd:
             return {"current-jobs-delayed":1, 
                     "current-jobs-reserved":2, 
                     "current-jobs-ready":3, 
-                    "current-waiting":12}
+                    "current-waiting":12, 
+                    "current-watching":32}
 
 
 class Test(unittest.TestCase):
@@ -31,7 +32,8 @@ class Test(unittest.TestCase):
              '     current-jobs-delayed              1              1',
              '       current-jobs-ready              3              3',
              '    current-jobs-reserved              2              2',
-             '          current-waiting             12             12'], stats)
+             '          current-waiting             12             12', 
+             '         current-watching             32             32'], stats)
 
 if __name__ == "__main__":
     unittest.main() 
