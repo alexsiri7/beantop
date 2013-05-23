@@ -8,7 +8,7 @@ class MockBeanstalkd:
         return ["tube_1",  "tube_2"]
     def yaml_data_filtered(self,  message,  fields):
         if message=="stats":
-            return {"current-jobs-ready":1, "current-waiting":2, "current-workers":3}
+            return {"current-jobs-ready":1, "current-waiting":2, "current-workers":3, "pid": 1223}
         else:
             return {"current-jobs-delayed":1, 
                     "current-jobs-reserved":2, 
@@ -27,6 +27,7 @@ class Test(unittest.TestCase):
         self.assertEquals(
             ['current-jobs-ready: 1',
              'current-waiting: 2',
+            'pid: 1223',             
              'current-workers: 3',
              'Tube                     tube_1         tube_2         ',
              '     current-jobs-delayed              1              1',

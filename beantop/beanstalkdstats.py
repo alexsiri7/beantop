@@ -3,6 +3,7 @@ HEADER_WIDTH = 25
 FIELD_WIDTH = 15
 GLOBAL_STATS_FIELDS = ["current-jobs-ready", 
                                 "current-waiting", 
+                                "pid",
                                 "current-workers"]
 TUBE_STATS_FIELDS = ["current-jobs-delayed", 
                             "current-jobs-ready", 

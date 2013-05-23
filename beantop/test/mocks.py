@@ -11,6 +11,7 @@ class MockTelnet:
     def read_until(self,  chars):
         if self.lastMessage == 'stats\r\n':
             return    ("current-jobs-ready: 5\n"
+                         "pid: 1223\n"
                          "current-waiting: 12\n"
                          "current-workers: 4\n")
         elif self.lastMessage == 'list-tubes\r\n':
