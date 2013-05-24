@@ -16,5 +16,6 @@ setup(name='beantop', version=version,
         "Environment :: Console",
         "Programming Language :: Python", 
         "Intended Audience :: System Administrators", 
-        "Topic :: Utilities"]
+        "Topic :: Utilities"], 
+    scripts=['scripts/beantop'],        
     )
