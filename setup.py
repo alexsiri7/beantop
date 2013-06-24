@@ -25,5 +25,5 @@ setup(name='beantop', version=version,
          'beantop = beantop.beantop:main',
          ],
       },
-
+    install_requires=["PyYAML"]
     )
