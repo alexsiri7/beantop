@@ -5,8 +5,14 @@ Top command for [beanstalkd][]
 
 [beanstalkd]: http://kr.github.com/beanstalkd/
 
+Check the status in [Codeship][] 
+
+[Codeship]: https://www.codeship.io/projects/1b845240-d79e-0130-d9d1-1a7125655b92/status
+
 =======
-Usage: ./beantop.py -h <host> -p <port>
+Install with python seyup.py install
+
+Usage: beantop -h <host> -p <port>
 
 Inspired in very useful command tools like htop and innotop, I decided a good top command for beanstalkd could be very useful. Right now, it only shows a subset of the information available at a specified interval.
 
