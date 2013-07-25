@@ -5,9 +5,9 @@ Top command for [beanstalkd][]
 
 [beanstalkd]: http://kr.github.com/beanstalkd/
 
-Check the status in [Codeship][] 
+Check the status in ![Codeship][codeship] 
 
-[Codeship]: https://www.codeship.io/projects/1b845240-d79e-0130-d9d1-1a7125655b92/status
+[codeship]: https://www.codeship.io/projects/1b845240-d79e-0130-d9d1-1a7125655b92/status
 
 =======
 Install with python seyup.py install
