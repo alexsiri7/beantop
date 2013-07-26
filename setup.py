@@ -19,11 +19,12 @@ setup(name='beantop', version=version,
         "Programming Language :: Python", 
         "Intended Audience :: System Administrators", 
         "Topic :: Utilities"], 
-    test_suite = "beantop.tests",
+    test_suite = "nose.collector",
     entry_points = {
      'console_scripts': [
          'beantop = beantop.beantop:main',
          ],
       },
-    install_requires=["PyYAML"]
+    install_requires=["PyYAML", "mock", "nose"],
+    tests_require=["mock", "nose"]
     )
