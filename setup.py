@@ -25,6 +25,6 @@ setup(name='beantop', version=version,
          'beantop = beantop.beantop:main',
          ],
       },
-    install_requires=["PyYAML", "mock", "nose"],
+    install_requires=["PyYAML"],
     tests_require=["mock", "nose"]
     )
