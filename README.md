@@ -10,9 +10,14 @@ Check the status in ![Codeship][codeship]
 [codeship]: https://www.codeship.io/projects/1b845240-d79e-0130-d9d1-1a7125655b92/status
 
 =======
-Install with python seyup.py install
 
-Usage: beantop -h <host> -p <port>
+Installation: ``$ sudo python setup.py install``
+
+Usage: ``$ beantop -h <host> -p <port>``
+
+Beantop installer uses python setuptools and will give you an error if missing: "ImportError: No module named setuptools"
+
+Install setuptools with: ``sudo apt-get install python-setuptools``
 
 Inspired in very useful command tools like htop and innotop, I decided a good top command for beanstalkd could be very useful. Right now, it only shows a subset of the information available at a specified interval.
 
